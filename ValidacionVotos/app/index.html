@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mesa Electoral - Presidente</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; display: flex; justify-content: center; padding: 50px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        .btn-container { margin-top: 20px; display: flex; justify-content: space-around; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-hab { background: #2e7d32; color: white; }
+        .btn-bloq { background: #c62828; color: white; }
+        .hidden { display: none; }
+        .status { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Panel del Presidente</h2>
+    <div id="esperando">
+        <p class="status">Esperando escaneo de DNI...</p>
+    </div>
+
+    <div id="datos-votante" class="hidden">
+        <hr>
+        <h3>Votante Detectado</h3>
+        <p><strong>Nombre:</strong> <span id="nom"></span></p>
+        <p><strong>DNI:</strong> <span id="dni"></span></p>
+        <div class="btn-container">
+            <button class="btn-hab" onclick="decidir(true)">HABILITAR</button>
+            <button class="btn-bloq" onclick="decidir(false)">BLOQUEAR</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Conectamos al backend que ya tenés corriendo
+    const socket = io('http://localhost:3000');
+    let dniActual = "";
+
+    // Escuchamos cuando el backend avisa que alguien escaneó su DNI
+    socket.on('elector_detectado', (elector) => {
+        dniActual = elector.dni;
+        document.getElementById('nom').innerText = elector.nombre + " " + elector.apellido;
+        document.getElementById('dni').innerText = elector.dni;
+        
+        document.getElementById('esperando').classList.add('hidden');
+        document.getElementById('datos-votante').classList.remove('hidden');
+    });
+
+    function decidir(autorizado) {
+        const estado = autorizado ? 'habilitado' : 'bloqueado';
+        
+        // Enviamos la decisión al backend
+        socket.emit('decision_presidente', {
+            dni: dniActual,
+            estado: estado
+        });
+
+        // Limpiamos la pantalla
+        alert("Acción enviada: " + estado);
+        document.getElementById('datos-votante').classList.add('hidden');
+        document.getElementById('esperando').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
