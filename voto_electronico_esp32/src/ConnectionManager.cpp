@@ -1,4 +1,5 @@
 #include "ConnectionManager.h"
+#include <Arduino.h> // Asegúrate de incluir esto para que reconozca uint8_t
 
 // Para la conexion a wifi y el mqtt
 #include <WiFi.h> 
@@ -60,17 +61,17 @@ void ConnectionManager::publishRandInt() {
 
 
 void ConnectionManager::callback(char* topic, byte* payload, unsigned int length) {
-      Serial.println("");
-  Serial.print("Mensaje recibido en el topic: ");
-  Serial.println(topic);
-  
-  std::string message;
-  for (int i = 0; i < length ; i++) {
-    message += (char)payload[i];
-  }
-  
-  Serial.print("Contenido:\t");
-  Serial.println(message.c_str());
+    Serial.println("");
+    Serial.print("Mensaje recibido en el topic: ");
+    Serial.println(topic);
+    
+    std::string message;
+    for (int i = 0; i < length ; i++) {
+        message += (char)payload[i];
+    }
+    
+    Serial.print("Contenido:\t");
+    Serial.println(message.c_str());
 
 }
 

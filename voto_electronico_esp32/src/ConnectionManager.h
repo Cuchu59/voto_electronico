@@ -1,8 +1,6 @@
 #ifndef CONNECTIONMANAGER_H
 #define CONNECTIONMANAGER_H
-
 #include <Arduino.h> // Asegúrate de incluir esto para que reconozca uint8_t
-
 class ConnectionManager {
     public:
         void setup();
