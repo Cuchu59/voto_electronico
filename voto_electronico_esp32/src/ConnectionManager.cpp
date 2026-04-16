@@ -1,23 +1,24 @@
 #include "ConnectionManager.h"
 
-#define SSID "UA-Alumnos"
-#define PASSWORD "41umn05WLC"
-#define TOPIC "datos_voto_electronico"
-#define TOPIC_vAleatorio "datos_voto_electronico/aleatorio"
-
 // Para la conexion a wifi y el mqtt
 #include <WiFi.h> 
 WiFiClient WIFI_CLIENT;
 #include <PubSubClient.h>
 PubSubClient MQTT_CLIENT;
 
+#define MY_SSID "UA-Alumnos"
+#define MY_PASSWORD "41umn05WLC"
+#define TOPIC "datos_voto_electronico"
+#define TOPIC_vAleatorio "datos_voto_electronico/aleatorio"
+
+
 
 void ConnectionManager::setup() {
 Serial.println();
   Serial.print("Conectando con ");
-  Serial.println(SSID);
+  Serial.println(MY_SSID);
 
-  WiFi.begin(SSID, PASSWORD);
+  WiFi.begin(MY_SSID, MY_PASSWORD);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
