@@ -39,3 +39,10 @@
 
 # debug information files
 *.dwo
+
+**/.pio/
+**/.vscode/
+
+# Pio and ide ignore
+*.pio
+*.vscode
