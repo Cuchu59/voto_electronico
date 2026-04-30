@@ -1,35 +1,45 @@
 #include "component/Scanner.h"
 
-// SCANNER PINS - GPIO16, GPIO17
-#define RX 16
-#define TX 17
+// Pines definidos según tu nueva configuración
+#define RX_PIN 16
+#define TX_PIN 17
 
-HardwareSerial HScanner(2); // Usar UART2
-
-std::vector<std::string> Scanner::getData() {
-    // Movemos el contenido a temp. buffer queda vacío automáticamente.
-    std::vector<std::string> temp = std::move(buffer);
-    
-    return temp;
-}
+HardwareSerial HScanner(2); 
 
 void Scanner::setup() {
-    HScanner.begin(9600, SERIAL_8N1, RX, TX);
-    Serial.println("Scanner listo...");
-    
+    // Probamos 9600 primero (estándar de fábrica) si 115200 falla
+    HScanner.begin(9600, SERIAL_8N1, RX_PIN, TX_PIN); 
+    Serial.println("--- Scan System Initialized (Pines 16/17) ---");
 }
 
-
-
 void Scanner::update() {
-    if (HScanner.available()) {
-        String data = HScanner.readStringUntil('\r'); // El GM865 envía un retorno de carro al final
+    // Mientras haya bytes en el buffer de hardware de la UART
+    while (HScanner.available() > 0) {
+        int raw = HScanner.read();
         
-        buffer.push_back(data.c_str());
-        
-        Serial.print("Lectura: ");
-        Serial.println(data);
+        if (raw > 0) { 
+            char c = (char)raw;
+
+            // Si es un terminador, cerramos la palabra/DNI
+            if (c == '\r' || c == '\n') {
+                if (!currentLine.empty()) {
+                    // Guardamos la lectura completa en el vector de mensajes
+                    buffer.push_back(currentLine); 
+                    Serial.print(" -> Lectura guardada: ");
+                    Serial.println(currentLine.c_str());
+                    
+                    // Limpiamos el acumulador para la siguiente lectura
+                    currentLine.clear(); 
+                }
+            } 
+            else {
+                // Si es un caracter imprimible, lo acumulamos
+                currentLine += c;
+            }
+        }
     }
 }
 
-
+std::vector<std::string> Scanner::getData() {
+    return std::move(buffer); //
+}

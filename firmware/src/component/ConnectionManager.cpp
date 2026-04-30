@@ -10,7 +10,7 @@ PubSubClient MQTT_CLIENT;
 #define MY_SSID "UA-Alumnos"
 #define MY_PASSWORD "41umn05WLC"
 #define TOPIC "datos_voto_electronico"
-#define TOPIC_vAleatorio "datos_voto_electronico/aleatorio"
+#define TOPIC_dni "datos_voto_electronico/dni"
 
 
 
@@ -40,23 +40,19 @@ void ConnectionManager::update() {
   if (!MQTT_CLIENT.connected()) {
     reconnect();
   }
-
-  publishRandInt(); // publica un valor al azar
   
   MQTT_CLIENT.loop(); // El motor del cliente, llamamos para que se actualice y ejecute lo necesario (callbacks)
   
 }
 
-void ConnectionManager::publishRandInt() {
-  // Publicar un mensaje. Publish.
-  // Convierte el entero a char. DEBE ser char.
-  int aleatorio = random(1,90);
-  Serial.println(aleatorio);
-  String aleatorioString = String(aleatorio);
-  char alea[6];
-  aleatorioString.toCharArray(alea, 6);
-  MQTT_CLIENT.publish(TOPIC_vAleatorio, alea);
-  
+void ConnectionManager::publishScannerData(const std::vector<std::string>& data) {
+    for (const std::string& dni : data) {
+        // Publicamos cada DNI en el tópico configurado
+        MQTT_CLIENT.publish(TOPIC_dni, dni.c_str());
+        
+        Serial.print("Enviando a AWS: ");
+        Serial.println(dni.c_str());
+    }
 }
 
 
