@@ -36,11 +36,11 @@ io.on('connection', (socket) => {
         if (data.decision === 'aprobado') {
             // CAMBIO AQUÍ: Usamos el nombre real 'habilitarVotante' 
             // y le pasamos (dni, io) como definiste en el controller
-            await VotoCtrl.habilitarVotante(data.dni, io);
+            const tokenReal = await VotoCtrl.habilitarVotante(data.dni, io);
 
     
             const payload = JSON.stringify({ 
-                token: "TOKEN_PROVISORIO", // Tendrías que capturar el token que genera la función
+                token: tokenReal, 
                 dni: data.dni,
                 mensaje: "Escanee para votar" 
             });
