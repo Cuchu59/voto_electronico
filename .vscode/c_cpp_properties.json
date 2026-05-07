@@ -8,8 +8,8 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/voto_electronico_esp32/include",
-                "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/voto_electronico_esp32/src",
+                "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/firmware/include",
+                "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/firmware/src",
                 "C:/Users/cuchu/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/.pio/libdeps/esp32dev/QRCode/src",
                 "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/.pio/libdeps/esp32dev/Adafruit SSD1306",
@@ -248,8 +248,8 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/voto_electronico_esp32/include",
-                    "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/voto_electronico_esp32/src",
+                    "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/firmware/include",
+                    "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/firmware/src",
                     "C:/Users/cuchu/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/.pio/libdeps/esp32dev/QRCode/src",
                     "C:/Users/cuchu/proyects/electronica-informatica/voto_electronico/.pio/libdeps/esp32dev/Adafruit SSD1306",

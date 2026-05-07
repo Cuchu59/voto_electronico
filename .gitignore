@@ -46,3 +46,11 @@
 # Pio and ide ignore
 *.pio
 *.vscode
+
+# 
+.pio/
+.vscode/
+build/
+bin/
+*.lib
+*.exe
