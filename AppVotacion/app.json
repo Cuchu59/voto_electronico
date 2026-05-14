@@ -3,6 +3,9 @@
     "name": "AppVotacion",
     "slug": "AppVotacion",
     "version": "1.0.0",
+    "extra":{
+      "hostUri": "44.196.23.48:8081"
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "appvotacion",
